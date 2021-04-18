@@ -6,12 +6,12 @@
 namespace ariel {
     class NumberWithUnits {
         private:
-            int num;
+            double num;
             std::string unit;
-            
+
         public:
             NumberWithUnits() {}
-            NumberWithUnits(int i, std::string s): num(i), unit(s) {}
+            NumberWithUnits(double i, std::string s): num(i), unit(s) {}
             ~ NumberWithUnits() {}
             
 
@@ -80,7 +80,6 @@ namespace ariel {
                 return os << n.num << "[" << n.unit << "]";
             }
             friend std::istream& operator >>(std::istream& is, const NumberWithUnits& n);
-
 
 
     };
