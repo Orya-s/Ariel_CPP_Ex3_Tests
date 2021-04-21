@@ -1,7 +1,6 @@
-#include <string>
-#include <iostream>
 #include <fstream>
 #include <sstream>
+#include <map>
 
 namespace ariel {
     class NumberWithUnits {
@@ -10,12 +9,14 @@ namespace ariel {
             std::string unit;
 
         public:
+            static std::map<std::string, std::map<std::string, double> > units;
+
             NumberWithUnits() {}
             NumberWithUnits(double i, std::string s): num(i), unit(s) {}
             ~ NumberWithUnits() {}
             
 
-            static void read_units(const std::ifstream& units_file);
+            static void read_units(std::ifstream &units);
             
 
             // unary operators
@@ -23,7 +24,7 @@ namespace ariel {
                 return NumberWithUnits(-num, unit);
             }
             const NumberWithUnits operator +() const {
-                return NumberWithUnits(num, unit);
+                return *this ;  // NumberWithUnits(num, unit);
             }
 
 
@@ -59,7 +60,8 @@ namespace ariel {
             }
 
             const NumberWithUnits operator *(double d){
-                return NumberWithUnits(num*d, unit);
+                num *= d;
+                return *this;
             }
             friend const NumberWithUnits operator *(double d, const NumberWithUnits& n){
                 return NumberWithUnits(n.num*d, n.unit);
