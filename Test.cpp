@@ -35,12 +35,10 @@ TEST_CASE("reading from file")
     CHECK_NOTHROW(NumberWithUnits g(7, "USD"));
 
     // non existing units
-    CHECK_THROWS(NumberWithUnits h(1, "cm"));
     CHECK_THROWS(NumberWithUnits i(2, "ml"));
     CHECK_THROWS(NumberWithUnits j(3, "gr"));
     CHECK_THROWS(NumberWithUnits k(4, "lb"));
     CHECK_THROWS(NumberWithUnits l(5, "oz"));
-    CHECK_THROWS(NumberWithUnits m(6, "sec"));
     CHECK_THROWS(NumberWithUnits n(7, "EUR"));
 }
 

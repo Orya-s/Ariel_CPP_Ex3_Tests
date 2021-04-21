@@ -11,9 +11,18 @@ namespace ariel {
         public:
             static std::map<std::string, std::map<std::string, double> > units;
 
-            NumberWithUnits() {}
-            NumberWithUnits(double i, std::string s): num(i), unit(s) {}
-            ~ NumberWithUnits() {}
+            NumberWithUnits(double i, std::string s) : num(i), unit(s) 
+            {
+                if (!units.count(s))
+                {
+                    throw std::runtime_error("Unit is unknown, unable to construct a new NumberWithUnits");
+                }
+                else
+                {
+                    num = i;
+                    unit = s;
+                }
+            }
             
 
             static void read_units(std::ifstream &units);
@@ -29,8 +38,8 @@ namespace ariel {
 
 
             // binary operators
-            const NumberWithUnits operator -(const NumberWithUnits& other) const;
-            const NumberWithUnits operator +(const NumberWithUnits& other) const;
+            const NumberWithUnits operator -(const NumberWithUnits& other) ;
+            const NumberWithUnits operator +(const NumberWithUnits& other) ;
 
             NumberWithUnits& operator -=(const NumberWithUnits& other);
             NumberWithUnits& operator +=(const NumberWithUnits& other);
@@ -83,6 +92,6 @@ namespace ariel {
             }
             friend std::istream& operator >>(std::istream& is, const NumberWithUnits& n);
 
-
+            ~ NumberWithUnits() {}
     };
 };
