@@ -1,10 +1,11 @@
 #include "NumberWithUnits.hpp"
-#include <stdexcept>
 #include <algorithm>
 #include <iterator>
-#include <istream>
 #include <string>
 #include <iostream>
+#include <fstream>
+#include <sstream>
+#include <stdexcept>
 
 
 using namespace std;
@@ -14,7 +15,7 @@ namespace ariel
     map<string, map<string, double>> NumberWithUnits::units;
     
 
-    void NumberWithUnits::read_units(ifstream& units_file)
+    void NumberWithUnits::read_units(ifstream &units_file)
     {
         string line;
         int one;
@@ -25,6 +26,9 @@ namespace ariel
             
         while (getline(units_file, line))
         {
+            firstUnit = " ";
+            secondUnit = " ";
+            val = 1;
             istringstream iss(line);
             iss >> one >> firstUnit >> split >> val >> secondUnit;
 
@@ -40,27 +44,41 @@ namespace ariel
                 units.insert(pair<string, map<string, double>>(secondUnit,inMap));                
             }
             
-
-            for (const auto& idx : units.at(firstUnit))  // adding convertion to all the matching units
+            for (const auto &idx : units.at(firstUnit))  // adding convertion to all the matching units
             {
-                double conv = idx.second * val;
-                units.at(idx.first).insert(pair<string,double>(secondUnit, conv));
-                units.at(secondUnit).insert(pair<string,double>(idx.first, 1 / conv));
+                units.at(idx.first).insert(pair<string,double>(secondUnit, (1/idx.second) * val));
+                units.at(secondUnit).insert(pair<string,double>(idx.first, idx.second * (1/val)));
             }    
 
-            for (const auto& idx : units.at(secondUnit))  // adding convertion to all the matching units
+            for (const auto &idx : units.at(secondUnit))  // adding convertion to all the matching units
             {
                 double conv = idx.second * val;
-                units.at(idx.first).insert(pair<string,double>(firstUnit, 1 / conv));
-                units.at(firstUnit).insert(pair<string,double>(idx.first, conv));
-            }
+                units.at(idx.first).insert(pair<string,double>(firstUnit, 1/(idx.second * val)));
+                units.at(firstUnit).insert(pair<string,double>(idx.first, idx.second * val));
+            } 
 
             units.at(firstUnit).insert(pair<string,double>(secondUnit, val));
             units.at(secondUnit).insert(pair<string,double>(firstUnit, 1 / val));
 
         }  // end of while
+        units_file.close();
 
-        units_file.close(); 
+        // map<string, map<string, double>>::iterator itr;
+        // for (itr = units.begin(); itr != units.end(); ++itr) {
+        //     cout << itr->first << "  " << '\n';
+        // }
+        // cout << endl;
+
+        map<string, map<string, double>>::iterator itr;
+        map<string, double>::iterator ptr;
+        for (itr = units.begin(); itr != units.end(); itr++) {
+            for (ptr = itr->second.begin(); ptr != itr->second.end(); ptr++) {
+                cout << "First key is " << itr->first
+                 << " And second key is " << ptr->first
+                 << " And value is " << ptr->second << endl;
+            }
+        }
+         
     }  // end of read_units
 
 

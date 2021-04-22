@@ -1,6 +1,9 @@
+#pragma once
+
 #include <fstream>
 #include <sstream>
 #include <map>
+#include <string>
 
 namespace ariel {
     class NumberWithUnits {
@@ -11,21 +14,16 @@ namespace ariel {
         public:
             static std::map<std::string, std::map<std::string, double> > units;
 
-            NumberWithUnits(double i, std::string s) : num(i), unit(s) 
+            NumberWithUnits(double i, const std::string& s) : num(i), unit(s) 
             {
                 if (!units.count(s))
                 {
                     throw std::runtime_error("Unit is unknown, unable to construct a new NumberWithUnits");
                 }
-                else
-                {
-                    num = i;
-                    unit = s;
-                }
             }
             
 
-            static void read_units(std::ifstream &units);
+            static void read_units(std::ifstream& units);
             
 
             // unary operators
