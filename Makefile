@@ -6,6 +6,10 @@ CXXFLAGS=-std=c++2a -Werror -Wsign-conversion
 SOURCES=NumberWithUnits.cpp
 OBJECTS=$(subst .cpp,.o,$(SOURCES))
 
+
+main: Main.o $(OBJECTS)
+	$(CXX) $(CXXFLAGS) $^ -o main
+
 run: demo
 	./$^
 

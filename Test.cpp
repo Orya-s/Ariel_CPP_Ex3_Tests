@@ -13,7 +13,7 @@ using namespace std;
 using namespace ariel;
 
 
-NumberWithUnits number;
+///NumberWithUnits number;
 
 TEST_CASE("reading from file")
 {
@@ -86,20 +86,20 @@ TEST_CASE("using binary operators on variables from different dimensions")
     CHECK_THROWS(e+=a);
 
     // ==
-    CHECK_FALSE(c==a);
-    CHECK_FALSE(c==b);
-    CHECK_FALSE(c==e);
-    CHECK_FALSE(a==c);
-    CHECK_FALSE(b==c);
-    CHECK_FALSE(e==c);
+    // CHECK_THROWS(bool flag = (c==a));
+    // CHECK_THROWS(bool flag = (c==b));
+    // CHECK_THROWS(bool flag = (c==e));
+    // CHECK_THROWS(bool flag = (a==c));
+    // CHECK_THROWS(bool flag = (b==c));
+    // CHECK_THROWS(bool flag = (e==c));
 
-    // !=
-    CHECK(c!=a);
-    CHECK(c!=b);
-    CHECK(c!=e);
-    CHECK(a!=c);
-    CHECK(b!=c);
-    CHECK(e!=c);
+    // // !=
+    // CHECK(c!=a);
+    // CHECK(c!=b);
+    // CHECK(c!=e);
+    // CHECK(a!=c);
+    // CHECK(b!=c);
+    // CHECK(e!=c);
 
     // >=
     // CHECK_THROWS(c>=a);

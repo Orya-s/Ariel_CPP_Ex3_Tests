@@ -67,8 +67,7 @@ namespace ariel {
             }
 
             const NumberWithUnits operator *(double d){
-                num *= d;
-                return *this;
+                return NumberWithUnits(num*d, unit);
             }
             friend const NumberWithUnits operator *(double d, const NumberWithUnits& n){
                 return NumberWithUnits(n.num*d, n.unit);
@@ -88,7 +87,7 @@ namespace ariel {
             friend std::ostream& operator <<(std::ostream& os, const NumberWithUnits& n){
                 return os << n.num << "[" << n.unit << "]";
             }
-            friend std::istream& operator >>(std::istream& is, const NumberWithUnits& n);
+            friend std::istream& operator >>(std::istream& is, NumberWithUnits& n);
 
             ~ NumberWithUnits() {}
     };
